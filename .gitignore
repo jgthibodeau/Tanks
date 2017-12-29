@@ -6,6 +6,9 @@ Obj/
 UnityGenerated/
 Library/
 Assets/AssetStoreTools*
+Library-Android/
+Library-iOS/
+iOS Builds/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
