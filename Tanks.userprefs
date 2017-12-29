@@ -1,14 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Kill.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\DisableOnDesktop.cs">
     <Files>
-      <File FileName="Assets\TankUserControl.cs" Line="17" Column="15" />
+      <File FileName="Assets\TankUserControl.cs" Line="1" Column="1" />
       <File FileName="Assets\TankController.cs" Line="1" Column="1" />
       <File FileName="Assets\TankTurret.cs" Line="1" Column="1" />
-      <File FileName="Assets\DaburuTools\Input\GyroControl.cs" Line="4" Column="22" />
-      <File FileName="Assets\DaburuTools\Input\Editor\GyroControlEditor.cs" Line="58" Column="78" />
-      <File FileName="Assets\CNControls\Scripts\Controllers\SimpleJoystick.cs" Line="236" Column="4" />
-      <File FileName="Assets\Kill.cs" Line="16" Column="49" />
+      <File FileName="Assets\DaburuTools\Input\GyroControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\DaburuTools\Input\Editor\GyroControlEditor.cs" Line="1" Column="1" />
+      <File FileName="Assets\CNControls\Scripts\Controllers\SimpleJoystick.cs" Line="1" Column="1" />
+      <File FileName="Assets\Kill.cs" Line="1" Column="1" />
+      <File FileName="Assets\DisableOnDesktop.cs" Line="13" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

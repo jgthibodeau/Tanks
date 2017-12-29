@@ -108,6 +108,7 @@
      <Compile Include="Assets\DaburuTools\Input\GyroControl.cs" />
      <Compile Include="Assets\DebugDrawingExtension\DebugExtension.cs" />
      <Compile Include="Assets\DebugDrawingExtension\Example\Example.cs" />
+     <Compile Include="Assets\DisableOnDesktop.cs" />
      <Compile Include="Assets\EffectExamples\Shared\Scripts\DecalDestroyer.cs" />
      <Compile Include="Assets\EffectExamples\Shared\Scripts\GunAim.cs" />
      <Compile Include="Assets\EffectExamples\Shared\Scripts\GunShoot.cs" />

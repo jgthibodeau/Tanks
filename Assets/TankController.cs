@@ -10,8 +10,8 @@ internal enum SpeedType
 
 public class TankController : MonoBehaviour
 {
-    [SerializeField] private WheelCollider[] m_WheelColliders = new WheelCollider[4];
-    [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
+//    [SerializeField] private WheelCollider[] m_WheelColliders = new WheelCollider[4];
+//    [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
     [SerializeField] private WheelEffects[] m_WheelEffects = new WheelEffects[4];
 
 	[SerializeField] private WheelCollider[] m_WheelCollidersLeft = new WheelCollider[2];
@@ -35,7 +35,7 @@ public class TankController : MonoBehaviour
     [SerializeField] private float m_SlipLimit;
     [SerializeField] private float m_BrakeTorque;
 
-    private Quaternion[] m_WheelMeshLocalRotations;
+//    private Quaternion[] m_WheelMeshLocalRotations;
     private Vector3 m_Prevpos, m_Pos;
     private int m_GearNum;
     private float m_GearFactor;
@@ -56,15 +56,24 @@ public class TankController : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        m_WheelMeshLocalRotations = new Quaternion[4];
-        for (int i = 0; i < 4; i++)
-        {
-            m_WheelMeshLocalRotations[i] = m_WheelMeshes[i].transform.localRotation;
-        }
-		foreach (WheelCollider wheel in m_WheelColliders) {
+		foreach (Collider collider1 in transform.GetComponentsInChildren<Collider> ()) {
+			foreach (Collider collider2 in transform.GetComponentsInChildren<Collider> ()) {
+				Physics.IgnoreCollision(collider1, collider2);
+			}
+		}
+
+//        m_WheelMeshLocalRotations = new Quaternion[4];
+//        for (int i = 0; i < 4; i++)
+//        {
+//            m_WheelMeshLocalRotations[i] = m_WheelMeshes[i].transform.localRotation;
+//        }
+		foreach (WheelCollider wheel in m_WheelCollidersRight) {
 			wheel.wheelDampingRate = m_WheelDamping;
 		}
-        m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
+		foreach (WheelCollider wheel in m_WheelCollidersLeft) {
+			wheel.wheelDampingRate = m_WheelDamping;
+		}
+        m_WheelCollidersLeft[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
 
         m_MaxHandbrakeTorque = float.MaxValue;
 
@@ -128,13 +137,25 @@ public class TankController : MonoBehaviour
 
 	public void Move(float accelLeft, float accelRight, float footbrake)
 	{
-		for (int i = 0; i < 4; i++)
-		{
-			Quaternion quat;
-			Vector3 position;
-			m_WheelColliders[i].GetWorldPose(out position, out quat);
-			m_WheelMeshes[i].transform.position = position;
-			m_WheelMeshes[i].transform.rotation = quat;
+		Quaternion quat;
+		Vector3 position;
+		int index = 0;
+		foreach (WheelCollider wheelCollider in m_WheelCollidersLeft) {
+			wheelCollider.GetWorldPose(out position, out quat);
+
+			m_WheelMeshesLeft[index].transform.position = position;
+			m_WheelMeshesLeft[index].transform.Rotate(0, 0, wheelCollider.rpm / 60 * 360 * Time.deltaTime);
+
+			index++;
+		}
+		index = 0;
+		foreach (WheelCollider wheelCollider in m_WheelCollidersRight) {
+			wheelCollider.GetWorldPose(out position, out quat);
+
+			m_WheelMeshesRight[index].transform.position = position;
+			m_WheelMeshesRight[index].transform.Rotate(0, 0, wheelCollider.rpm / 60 * 360 * Time.deltaTime);
+
+			index++;
 		}
 
 		//clamp input values
@@ -151,7 +172,7 @@ public class TankController : MonoBehaviour
 		GearChanging();
 
 		AddDownForce();
-		CheckForWheelSpin();
+//		CheckForWheelSpin();
 		TractionControl();
 	}
 
@@ -209,8 +230,8 @@ public class TankController : MonoBehaviour
     // this is used to add more grip in relation to speed
     private void AddDownForce()
     {
-        m_WheelColliders[0].attachedRigidbody.AddForce(-transform.up*m_Downforce*
-                                                     m_WheelColliders[0].attachedRigidbody.velocity.magnitude);
+        m_WheelCollidersLeft[0].attachedRigidbody.AddForce(-transform.up*m_Downforce*
+			m_WheelCollidersLeft[0].attachedRigidbody.velocity.magnitude);
     }
 
 
@@ -219,37 +240,37 @@ public class TankController : MonoBehaviour
     // 2) plays tiure skidding sounds
     // 3) leaves skidmarks on the ground
     // these effects are controlled through the WheelEffects class
-    private void CheckForWheelSpin()
-    {
-        // loop through all wheels
-        for (int i = 0; i < 4; i++)
-        {
-            WheelHit wheelHit;
-            m_WheelColliders[i].GetGroundHit(out wheelHit);
-
-            // is the tire slipping above the given threshhold
-            if (Mathf.Abs(wheelHit.forwardSlip) >= m_SlipLimit || Mathf.Abs(wheelHit.sidewaysSlip) >= m_SlipLimit)
-            {
-                m_WheelEffects[i].EmitTyreSmoke();
-
-                // avoiding all four tires screeching at the same time
-                // if they do it can lead to some strange audio artefacts
-                if (!AnySkidSoundPlaying())
-                {
-                    m_WheelEffects[i].PlayAudio();
-                }
-                continue;
-            }
-
-            // if it wasnt slipping stop all the audio
-            if (m_WheelEffects[i].PlayingAudio)
-            {
-                m_WheelEffects[i].StopAudio();
-            }
-            // end the trail generation
-            m_WheelEffects[i].EndSkidTrail();
-        }
-    }
+//    private void CheckForWheelSpin()
+//    {
+//        // loop through all wheels
+//        for (int i = 0; i < 4; i++)
+//        {
+//            WheelHit wheelHit;
+//            m_WheelColliders[i].GetGroundHit(out wheelHit);
+//
+//            // is the tire slipping above the given threshhold
+//            if (Mathf.Abs(wheelHit.forwardSlip) >= m_SlipLimit || Mathf.Abs(wheelHit.sidewaysSlip) >= m_SlipLimit)
+//            {
+//                m_WheelEffects[i].EmitTyreSmoke();
+//
+//                // avoiding all four tires screeching at the same time
+//                // if they do it can lead to some strange audio artefacts
+//                if (!AnySkidSoundPlaying())
+//                {
+//                    m_WheelEffects[i].PlayAudio();
+//                }
+//                continue;
+//            }
+//
+//            // if it wasnt slipping stop all the audio
+//            if (m_WheelEffects[i].PlayingAudio)
+//            {
+//                m_WheelEffects[i].StopAudio();
+//            }
+//            // end the trail generation
+//            m_WheelEffects[i].EndSkidTrail();
+//        }
+//    }
 
     // crude traction control that reduces the power to wheel if the car is wheel spinning too much
     private void TractionControl()
@@ -294,4 +315,10 @@ public class TankController : MonoBehaviour
         }
         return false;
     }
+
+//	private void OnCollisionEnter (Collision collision) {
+//		if (collision.gameObject.tag == gameObject.tag) {
+//			Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+//		}
+//	}
 }

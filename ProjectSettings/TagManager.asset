@@ -9,7 +9,7 @@ TagManager:
   - Cloud
   - dirt
   - Floor
-  - Edible
+  - Player1
   layers:
   - Default
   - TransparentFX
@@ -19,13 +19,13 @@ TagManager:
   - UI
   - 
   - 
-  - Cloud
+  - 
   - Player
   - Character
   - Enemy
-  - Perchable
+  - 
   - Terrain
-  - BugRigidbody
+  - 
   - Ocean
   - Trail
   - ToggleableCollider

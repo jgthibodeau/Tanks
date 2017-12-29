@@ -2,10 +2,11 @@ using System;
 using CnControls;
 using UnityEngine;
 using DaburuTools;
+using UnityEngine.UI;
 
 [RequireComponent(typeof (TankController))]
 public class TankUserControl : MonoBehaviour{
-	private TankController m_Car; // the car controller we want to use
+	private TankController m_Tank; // the car controller we want to use
 	public DaburuTools.Input.GyroControl gyroControl;
 
 	public SimpleJoystick leftJoystick;
@@ -13,13 +14,18 @@ public class TankUserControl : MonoBehaviour{
 
 	public GameObject bullet;
 	public float bulletForce;
+	public bool fireFromTurret;
 	public float bulletOutDistance;
 	public float bulletUpDistance;
+	public Transform missileOrigin;
 	private bool fired;
+
+	public Text debugText;
 
 	private void Awake(){
 	    // get the car controller
-	    m_Car = GetComponent<TankController>();
+		m_Tank = GetComponent<TankController>();
+		gyroControl.SnapToPoint ();
 	}
 
 
@@ -37,7 +43,7 @@ public class TankUserControl : MonoBehaviour{
 			rightJoystick.Reset ();
 		}
 
-		m_Car.Move (left, right, (brake ? 1 : 0));
+		m_Tank.Move (left, right, (brake ? 1 : 0));
 
 		bool recalibrate = CnInputManager.GetButton ("Recalibrate");
 		if (recalibrate) {
@@ -47,10 +53,19 @@ public class TankUserControl : MonoBehaviour{
 		bool fire = CnInputManager.GetButton ("Fire");
 		if (fire && !fired) {
 			fired = true;
-			GameObject bulletInst = GameObject.Instantiate (bullet);
-			bulletInst.transform.position = gyroControl.transform.position + gyroControl.transform.forward * bulletOutDistance + gyroControl.transform.up * bulletUpDistance;
-			bulletInst.transform.rotation = gyroControl.transform.rotation;
-			bulletInst.GetComponent<Rigidbody> ().AddForce (gyroControl.transform.forward * bulletForce);
+//			GameObject bulletInst = GameObject.Instantiate (bullet);
+			Vector3 position = missileOrigin.position + missileOrigin.forward * bulletOutDistance + missileOrigin.up * bulletUpDistance;
+			GameObject bulletInst = Instantiate (bullet, position, missileOrigin.rotation);
+
+//			if (fireFromTurret) {
+//				bulletInst.transform.position = missileOrigin.position;
+//			}
+//			bulletInst.tag = gameObject.tag;
+//			debugText.text = "adding force";
+			bulletInst.GetComponent<Rigidbody> ().AddForce (bulletInst.transform.forward * bulletForce);
+//			debugText.text = "added force "+bulletInst.transform.forward * bulletForce;
+
+//			bulletInst.GetComponent<Rigidbody> ().AddForce (Vector3.forward * bulletForce);
 		} else if (!fire) {
 			fired = false;
 		}

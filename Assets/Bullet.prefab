@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4751719184452262}
   - component: {fileID: 33406782612115330}
   - component: {fileID: 23393878128971930}
-  - component: {fileID: 64285702657460362}
   m_Layer: 0
   m_Name: Mushroom_Tall_01 1
   m_TagString: Untagged
@@ -39,6 +38,7 @@ GameObject:
   - component: {fileID: 4891572591981428}
   - component: {fileID: 54362981285087294}
   - component: {fileID: 114077223430276184}
+  - component: {fileID: 136946559698596518}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1402912882091856}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4655457, y: 465, z: 265.56503}
+  m_LocalPosition: {x: 0, y: 0, z: 333}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4751719184452262}
@@ -123,25 +123,11 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &64285702657460362
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1079888881108606}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300002, guid: f0d2c3cd7721cbd4196a47beaec8a76f, type: 3}
 --- !u!114 &114077223430276184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -155,3 +141,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTimeInSeconds: 10
   startTime: 0
+--- !u!136 &136946559698596518
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402912882091856}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.08
+  m_Height: 0.47
+  m_Direction: 2
+  m_Center: {x: -0.002, y: 0.01, z: 0.205}
