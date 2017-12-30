@@ -14,6 +14,7 @@ public class DragablePanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 	private Vector2 pointerOffset;
 	private RectTransform canvasRectTransform;
 	private RectTransform panelRectTransform;
+	private int pointerCount = 0;
 
 	void Awake() {
 		Canvas canvas = GetComponentInParent<Canvas> ();
@@ -26,6 +27,8 @@ public class DragablePanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 	}
 
 	public void OnPointerDown(PointerEventData data) {
+		pointerCount++;
+
 		RectTransformUtility.ScreenPointToLocalPointInRectangle (
 			panelRectTransform,
 			data.position,
@@ -35,6 +38,8 @@ public class DragablePanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 	}
 
 	public void OnPointerUp(PointerEventData data) {
+		pointerCount--;
+
 		//if data.delta.y is negative, dragging down
 		if (data.delta.y < 0) {
 			StartCoroutine ("OpenSmooth");
@@ -54,7 +59,7 @@ public class DragablePanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 	}
 
 	public void OnDrag(PointerEventData data) {
-		if (panelRectTransform == null) {
+		if (panelRectTransform == null || pointerCount != 1) {
 			return;
 		}
 
