@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 namespace DaburuTools
 {
@@ -23,6 +24,8 @@ namespace DaburuTools
 			[SerializeField] private SnapTo enum_snapTo = SnapTo.InitialRotation;
 
 			// Un-Editable Variables
+			public bool isLocalPlayer = false;
+			private bool initialized = false;
 			private Gyroscope m_Gyroscope;				// m_Gyroscope: A reference to the gyroscope
 			private Quaternion m_gyroscopeRotation;		// m_gyroscopeRotation: The proper axis-defined rotation of the gyroscope
 			private Quaternion m_unityWorldRotation;	// m_unityWorldRotation: The current rotation that goes along with the world-axis
@@ -35,8 +38,13 @@ namespace DaburuTools
 
 			// Private Functions
 			// Awake(): is called at the start of the program
-			void Awake () 
+			public void Init () 
 			{
+//				NetworkIdentity parentIdentity = transform.parent.GetComponentInParent<NetworkIdentity> ();
+//				isLocalPlayer = parentIdentity.isLocalPlayer;
+				if (!isLocalPlayer) {
+					return;
+				}
 				// Gyroscope Initialisation
 				m_Gyroscope = UnityEngine.Input.gyro;
 				m_Gyroscope.enabled = true;
@@ -65,11 +73,16 @@ namespace DaburuTools
 				}
 
 				initialLocalRotation = transform.localRotation;
+				initialized = true;
+				StartCoroutine (DelayedSnapToPoint());
 			}
 			
 			// Update(): is called every frame
 			void Update()
 			{
+				if (!isLocalPlayer || !initialized) {
+					return;
+				}
 				UpdateGyroscopeRotation();
 
 				// Editor - Mouse Emulation
@@ -119,6 +132,11 @@ namespace DaburuTools
 						mf_snapToPointOffsetRotation = -m_gyroscopeRotation.eulerAngles.y;
 						break;
 				}
+			}
+
+			IEnumerator DelayedSnapToPoint() {
+				yield return new WaitForFixedUpdate ();
+				SnapToPoint ();
 			}
 
 			// Getter-Setter Functions

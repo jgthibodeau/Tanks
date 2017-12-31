@@ -39,6 +39,9 @@ GameObject:
   - component: {fileID: 54362981285087294}
   - component: {fileID: 114077223430276184}
   - component: {fileID: 136946559698596518}
+  - component: {fileID: 114233666440251422}
+  - component: {fileID: 114944134720513900}
+  - component: {fileID: 114340298235876576}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -66,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1402912882091856}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 333}
+  m_LocalPosition: {x: 2.81, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4751719184452262}
@@ -141,6 +144,70 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTimeInSeconds: 10
   startTime: 0
+--- !u!114 &114233666440251422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402912882091856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 129
+    i1: 236
+    i2: 34
+    i3: 102
+    i4: 75
+    i5: 82
+    i6: 37
+    i7: 164
+    i8: 58
+    i9: 172
+    i10: 204
+    i11: 123
+    i12: 98
+    i13: 146
+    i14: 138
+    i15: 20
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114340298235876576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402912882091856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec68447053fd22e4f90fc14b6b3b80bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114944134720513900
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402912882091856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.0625
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!136 &136946559698596518
 CapsuleCollider:
   m_ObjectHideFlags: 1

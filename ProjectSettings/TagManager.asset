@@ -30,8 +30,8 @@ TagManager:
   - Trail
   - ToggleableCollider
   - Camera
-  - TankBody
-  - 
+  - DrawablePlayer
+  - NonDrawablePlayer
   - 
   - 
   - 
