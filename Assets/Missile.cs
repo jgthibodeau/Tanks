@@ -4,31 +4,33 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [RequireComponent(typeof (NetworkTransform))]
+[RequireComponent(typeof (Rigidbody))]
 public class Missile : NetworkBehaviour {
-	public const int damage = 10;
-	private NetworkTransform networkTransform;
+	public int damage = 10;
 
-//	void Start() {
-//		networkTransform = GetComponent<NetworkTransform> ();
-//		StartCoroutine (ModelFollowServerPos());
-//	}
-//
-//	IEnumerator ModelFollowServerPos() {
-//		//used to store difference between client model and server position
-//		Vector3 delta;
-//		float dist;
-//		while (!isServer) {
-//			dist = Vector3.Distance(networkTransform.targetSyncPosition, transform.position);
-////			if (dist > snapThreshold) SnapModel();
-//			transform.position += networkTransform.targetSyncVelocity * Time.deltaTime;
-//			delta = networkTransform.targetSyncVelocity - transform.position;
-////			transform.position += delta * Time.deltaTime * correctionInfluence;
-//			yield return 0;
-//		}
-//	}
+	public int acceleration = 10;
+	public int accelerationTime = 10;
+	private float startTime;
+
+	public GameObject explosion;
+
+	private NetworkTransform networkTransform;
+	private Rigidbody rigidBody;
+
+	void Start() {
+		startTime = Time.time;
+		rigidBody = GetComponent<Rigidbody> ();
+	}
+
+	void Update() {
+		if (Time.time - startTime < accelerationTime) {
+			rigidBody.AddForce (transform.forward * acceleration);
+		}
+	}
 
 	void OnCollisionEnter(Collision collision) {
 		Destroy (gameObject);
+		GameObject.Instantiate (explosion, transform.position, transform.rotation);
 
 		GameObject hit = collision.gameObject;
 		Health health = hit.GetComponent<Health> ();

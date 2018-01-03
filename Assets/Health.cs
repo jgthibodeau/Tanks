@@ -9,6 +9,8 @@ public class Health : NetworkBehaviour {
 	public int currentHealth = maxHealth;
 	public const int maxHealth = 100;
 	public Text healthText;
+	public bool respawn = false;
+	public bool destroyOnDeath = true;
 
 	private NetworkStartPosition[] spawnPoints;
 	private Vector3 originalSpawn;
@@ -34,8 +36,12 @@ public class Health : NetworkBehaviour {
 			Debug.Log ("Killed " + gameObject);
 			Debug.Log ("Respawning");
 
-			currentHealth = maxHealth;
-			RpcRespawn ();
+			if (respawn) {
+				currentHealth = maxHealth;
+				RpcRespawn ();
+			} else if (destroyOnDeath) {
+				GameObject.Destroy (gameObject);
+			}
 		}
 	}
 

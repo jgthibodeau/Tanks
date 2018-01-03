@@ -92,6 +92,8 @@ namespace CnControls
         [Tooltip("Touch Zone transform")]
         public RectTransform TouchZone;
 
+		public Text debugText;
+
         // ---------------------------------------------------------------------------
 
         private Vector2 _initialStickPosition;
@@ -145,7 +147,17 @@ namespace CnControls
             CnInputManager.UnregisterVirtualAxis(VerticalAxis);
         }
 
-        public virtual void OnDrag(PointerEventData eventData)
+		public void OnEndDrag(PointerEventData data)
+		{
+			debugText.text = "OnEndDrag called.";
+		}
+
+		public void OnBeginDrag(PointerEventData data)
+		{
+			debugText.text = "OnBeginDrag called.";
+		}
+
+        public void OnDrag(PointerEventData eventData)
         {
             // Unity remote multitouch related thing
             // When we feed fake PointerEventData we can't really provide a camera, 

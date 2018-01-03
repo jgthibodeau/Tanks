@@ -1,5 +1,5 @@
 using System;
-using CnControls;
+using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine;
 using DaburuTools;
 using UnityEngine.UI;
@@ -9,8 +9,8 @@ using UnityEngine.Networking;
 public class TankUserControl : NetworkBehaviour{
 	private TankController m_Tank; // the car controller we want to use
 
-	public SimpleJoystick leftJoystick;
-	public SimpleJoystick rightJoystick;
+	public Joystick leftJoystick;
+	public Joystick rightJoystick;
 
 	public GameObject bullet;
 	public float bulletForce;
@@ -32,9 +32,12 @@ public class TankUserControl : NetworkBehaviour{
 //		float h = Util.GetAxis("Horizontal");
 //		float v = Util.GetAxis("Vertical");
 
-		float left = CnInputManager.GetAxis("Vertical");
-		float right = CnInputManager.GetAxis("Vertical Right");
-		bool brake = CnInputManager.GetButton ("Brake");
+//		float left = CnInputManager.GetAxis("Vertical");
+//		float right = CnInputManager.GetAxis("Vertical Right");
+//		bool brake = CnInputManager.GetButton ("Brake");
+		float left = CrossPlatformInputManager.GetAxis("Vertical");
+		float right = CrossPlatformInputManager.GetAxisRaw("Vertical Right");
+		bool brake = CrossPlatformInputManager.GetButton ("Brake");
 
 		if (brake) {
 			leftJoystick.Reset ();
@@ -43,12 +46,12 @@ public class TankUserControl : NetworkBehaviour{
 
 		m_Tank.Move (left, right, (brake ? 1 : 0));
 
-		bool recalibrate = CnInputManager.GetButton ("Recalibrate");
+		bool recalibrate = CrossPlatformInputManager.GetButton ("Recalibrate");
 		if (recalibrate) {
 			Camera.main.GetComponent<DaburuTools.Input.GyroControl> ().SnapToPoint ();
 		}
 			
-		bool fire = CnInputManager.GetButton ("Fire");
+		bool fire = CrossPlatformInputManager.GetButton ("Fire");
 		if (fire && !fired) {
 			fired = true;
 			CmdFire ();

@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace CnControls
 {
-    public class SensitiveJoystick : SimpleJoystick
+	public class SensitiveJoystick : SimpleJoystick, IDragHandler
     {
         public AnimationCurve SensitivityCurve = new AnimationCurve(
             new Keyframe(0f, 0f, 1f, 1f),
             new Keyframe(1f, 1f, 1f, 1f));
 
-        public override void OnDrag(PointerEventData eventData)
+        public void OnDrag(PointerEventData eventData)
         {
             base.OnDrag(eventData);
 

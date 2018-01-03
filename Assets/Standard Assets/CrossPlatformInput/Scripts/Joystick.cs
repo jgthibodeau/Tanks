@@ -18,6 +18,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 		public AxisOption axesToUse = AxisOption.Both; // The options for the axes that the still will use
 		public string horizontalAxisName = "Horizontal"; // The name given to the horizontal axis for the cross platform input
 		public string verticalAxisName = "Vertical"; // The name given to the vertical axis for the cross platform input
+		public bool keepValue = false;
 
 		Vector3 m_StartPos;
 		bool m_UseX; // Toggle for using the x axis
@@ -33,6 +34,7 @@ namespace UnityStandardAssets.CrossPlatformInput
         void Start()
         {
             m_StartPos = transform.position;
+//			m_StartPos = new Vector3 (transform.localPosition.x, transform.localPosition.y, transform.localPosition.z);
         }
 
 		void UpdateVirtualAxes(Vector3 value)
@@ -95,8 +97,10 @@ namespace UnityStandardAssets.CrossPlatformInput
 
 		public void OnPointerUp(PointerEventData data)
 		{
-			transform.position = m_StartPos;
-			UpdateVirtualAxes(m_StartPos);
+			if (!keepValue) {
+				transform.position = m_StartPos;
+				UpdateVirtualAxes(m_StartPos);
+			}
 		}
 
 
@@ -113,6 +117,11 @@ namespace UnityStandardAssets.CrossPlatformInput
 			{
 				m_VerticalVirtualAxis.Remove();
 			}
+		}
+
+		public void Reset() {
+			transform.position = m_StartPos;
+			UpdateVirtualAxes(m_StartPos);
 		}
 	}
 }
