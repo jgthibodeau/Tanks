@@ -79,9 +79,8 @@ GameObject:
   - component: {fileID: 20729863552241026}
   - component: {fileID: 124984777973402372}
   - component: {fileID: 92813205179030788}
-  - component: {fileID: 81003023307028274}
   m_Layer: 19
-  m_Name: Camera
+  m_Name: Other Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,13 +252,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1189899450430736}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!81 &81003023307028274
-AudioListener:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1989963011366786}
-  m_Enabled: 1
 --- !u!81 &81826088103617158
 AudioListener:
   m_ObjectHideFlags: 1

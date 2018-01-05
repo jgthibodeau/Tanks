@@ -1,90 +1,70 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-//public enum InputName{
-//	PITCH_UP,
-//	PITCH_DOWN,
-//	ROLL_LEFT,
-//	ROLL_RIGHT,
-//	WINGS_IN,
-//	WINGS_OUT,
-//	FLAP,
-//	GRAB,
-//	CAMERA_LEFT,
-//	CAMERA_RIGHT,
-//	CAMERA_BACK,
-//	PAUSE,
-//
-//	UI_UP,
-//	UI_DOWN,
-//	UI_LEFT,
-//	UI_RIGHT,
-//
-//	UI_SELECT,
-//	UI_CANCEL
-//}
-//public enum InputType{
-//	AXIS,
-//	BUTTON_HELD,
-//	BUTTON_PRESS
-//}
-//public class InputMapping{
-//	public string name;
-//	public string description;
-//	public InputType type;
-//
-//	public InputMapping(string name, string description, InputType type){
-//		this.name = name;
-//		this.description = description;
-//		this.type = type;
-//	}
-//}
+using UnityStandardAssets.CrossPlatformInput;
 
 public class MyInputManager : MonoBehaviour {
-//	private string alt = "alt";
 
-//	public Dictionary<InputName,InputMapping> inputMappings;
-//
-//	string KeyName(InputName inputName, bool altKey){
-//		string key = inputName.ToString ();
-//		if (altKey) {
-//			key += alt;
-//		}
-//		return key;
-//	}
-//	void SetInput(InputName inputName, string buttonName, bool altKey){
-//		string key = KeyName (inputName, altKey);
-//		PlayerPrefs.SetString (key, buttonName);
-//	}
-//	void UnsetInputByName(InputName inputName, bool altKey){
-//		string key = KeyName (inputName, altKey);
-//		PlayerPrefs.DeleteKey (key);
-//	}
-//	void UnsetAllInputsByName(InputName inputName){
-//		string key = KeyName (inputName, false);
-//		string altkey = KeyName (inputName, true);
-//
-//		PlayerPrefs.DeleteKey (key);
-//		PlayerPrefs.DeleteKey (altkey);
-//	}
-
-//	public float GetInput(InputName inputName) {
-//		InputMapping inputMapping = inputMappings [inputName];
-//
-//		string key = KeyName (inputName.ToString (), false);
-//		string buttonName = PlayerPrefs.GetString (key);
-//
-//		switch (inputMapping.type){
-//		case InputType.AXIS:
-//			return Input.GetAxis (buttonName);
-//			break;
-//		case InputType.BUTTON_HELD:
-//			return Input.GetButton (buttonName);
-//			break;
-//		case InputType.BUTTON_PRESS:
-//			return Input.GetButtonDown (buttonName);
-//			break;
-//		}
-//	}
+	public static AccelerationEvent GetAccelerationEvent (int index){
+		return Input.GetAccelerationEvent(index);
+	}
+	public static float GetAxis (string name){
+		#if UNITY_EDITOR
+		return Input.GetAxis(name);
+		#else
+		return CrossPlatformInputManager.GetAxis(name);
+		#endif
+	}
+	public static float GetAxisRaw (string name){
+		#if UNITY_EDITOR
+		return Input.GetAxisRaw(name);
+		#else
+		return CrossPlatformInputManager.GetAxisRaw(name);
+		#endif
+	}
+	public static bool GetButton (string name){
+		#if UNITY_EDITOR
+		return Input.GetButton(name);
+		#else
+		return CrossPlatformInputManager.GetButton(name);
+		#endif
+	}
+	public static bool GetButtonDown (string name){
+		#if UNITY_EDITOR
+		return Input.GetButtonDown(name);
+		#else
+		return CrossPlatformInputManager.GetButtonDown(name);
+		#endif
+	}
+	public static bool GetButtonUp (string name){
+		#if UNITY_EDITOR
+		return Input.GetButtonUp(name);
+		#else
+		return CrossPlatformInputManager.GetButtonUp(name);
+		#endif
+	}
+	public static string[] GetJoystickNames (){
+		return Input.GetJoystickNames();
+	}
+	public static bool GetKey (string name){
+		return Input.GetKey(name);
+	}
+	public static bool GetKeyDown (string name){
+		return Input.GetKeyDown(name);
+	}
+	public static bool GetKeyUp (string name){
+		return Input.GetKeyUp(name);
+	}
+	public static bool GetMouseButton (int index){
+		return Input.GetMouseButton(index);
+	}
+	public static bool GetMouseButtonDown (int index){
+		return Input.GetMouseButtonDown(index);
+	}
+	public static bool GetMouseButtonUp (int index){
+		return Input.GetMouseButtonUp(index);
+	}
+	public static Touch GetTouch (int index){
+		return Input.GetTouch(index);
+	}
 }

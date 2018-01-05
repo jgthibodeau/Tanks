@@ -46,7 +46,9 @@ public class Health : NetworkBehaviour {
 	}
 
 	void OnChangeHealth(int currentHealth) {
-		healthText.text = "Health: " + currentHealth;
+		if (healthText != null) {
+			healthText.text = "Health: " + currentHealth;
+		}
 	}
 
 	[ClientRpc]
