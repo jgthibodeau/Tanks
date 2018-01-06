@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 public class Missile : NetworkBehaviour {
 	public int damage = 10;
 
+	public bool accelerate = false;
 	public int acceleration = 10;
 	public int accelerationTime = 10;
 	private float startTime;
@@ -23,20 +24,31 @@ public class Missile : NetworkBehaviour {
 	}
 
 	void Update() {
-		if (Time.time - startTime < accelerationTime) {
-			rigidBody.AddForce (transform.forward * acceleration);
+		if (accelerate) {
+			if (Time.time - startTime < accelerationTime) {
+				rigidBody.AddForce (transform.forward * acceleration);
+			}
 		}
 	}
 
 	void OnCollisionEnter(Collision collision) {
-		Destroy (gameObject);
-		GameObject.Instantiate (explosion, transform.position, transform.rotation);
-
 		GameObject hit = collision.gameObject;
 		Health health = hit.GetComponent<Health> ();
 
 		if (health != null) {
 			health.TakeDamage (damage);
 		}
+
+		Debug.Log ("calling explosion");
+		CmdExplode ();
+	}
+
+	[Command]
+	private void CmdExplode() {
+		Debug.Log ("creating explosion");
+		GameObject explosionInst = GameObject.Instantiate (explosion, transform.position, transform.rotation);
+		NetworkServer.Spawn (explosionInst);
+		Debug.Log ("spawned explosion");
+		Destroy (gameObject);
 	}
 }

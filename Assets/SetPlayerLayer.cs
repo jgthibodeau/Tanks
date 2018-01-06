@@ -9,7 +9,6 @@ public class SetPlayerLayer : NetworkBehaviour {
 	void Start () {
 		if (isLocalPlayer) {
 			foreach (Transform t in gameObject.GetComponentsInChildren<Transform> ()) {
-				Debug.Log (t);
 				if (t.gameObject.layer != LayerMask.NameToLayer ("DrawablePlayer")) {
 					t.gameObject.layer = LayerMask.NameToLayer ("NonDrawablePlayer");
 				}

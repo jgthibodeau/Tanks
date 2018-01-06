@@ -387,7 +387,7 @@ MonoBehaviour:
   damage: 10
   acceleration: 100
   accelerationTime: 10
-  explosion: {fileID: 191186, guid: 079954accd64b32419ec069129c81273, type: 2}
+  explosion: {fileID: 1243835993909528, guid: 711066bed5e0ec244a83d13c97150907, type: 2}
 --- !u!114 &114944134720513900
 MonoBehaviour:
   m_ObjectHideFlags: 1

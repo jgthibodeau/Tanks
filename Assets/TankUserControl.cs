@@ -7,7 +7,8 @@ using UnityEngine.Networking;
 
 [RequireComponent(typeof (TankController))]
 public class TankUserControl : NetworkBehaviour{
-	private TankController m_Tank; // the car controller we want to use
+	private TankController m_Tank;
+	public GameObject UI;
 	public CameraShake cameraShake;
 	public float fireCameraShakeAmount;
 
@@ -15,6 +16,7 @@ public class TankUserControl : NetworkBehaviour{
 	public Joystick rightJoystick;
 
 	public GameObject bullet;
+	public ParticleSystem barrelSmoke;
 	public float bulletForce;
 	public Transform missileOrigin;
 	private bool fired;
@@ -26,7 +28,7 @@ public class TankUserControl : NetworkBehaviour{
 	public Text debugText;
 
 	private void Awake(){
-	    // get the car controller
+		UI.SetActive (isLocalPlayer);
 		m_Tank = GetComponent<TankController>();
 	}
 
@@ -34,13 +36,7 @@ public class TankUserControl : NetworkBehaviour{
 		if (!isLocalPlayer) {
 			return;
 		}
-	    // pass the input to the car!
-//		float h = Util.GetAxis("Horizontal");
-//		float v = Util.GetAxis("Vertical");
 
-//		float left = CnInputManager.GetAxis("Vertical");
-//		float right = CnInputManager.GetAxis("Vertical Right");
-//		bool brake = CnInputManager.GetButton ("Brake");
 		float left = MyInputManager.GetAxis("Vertical");
 		float right = MyInputManager.GetAxisRaw("Vertical Right");
 		bool brake = MyInputManager.GetButton ("Brake");
@@ -65,33 +61,25 @@ public class TankUserControl : NetworkBehaviour{
 		if (fire) {
 			Fire ();
 		}
-//		if (fire && !fired) {
-//			cameraShake.shake = fireCameraShakeAmount;
-//			fired = true;
-//			CmdFire ();
-//		} else if (!fire) {
-//			fired = false;
-//		}
     }
 
 	private void Fire() {
 		if (fireCoolDown <= 0) {
+			CmdFire ();
+			barrelSmoke.Play (true);
 			cameraShake.shake = fireCameraShakeAmount;
 			fireCoolDown = maxFireCoolDown;
-			CmdFire ();
 		}
 	}
 
 	[Command]
 	private void CmdFire() {
 		GameObject bulletInst = Instantiate (bullet, missileOrigin.position, missileOrigin.rotation);
-
-//		debugText.text = "fired - adding force";
-//		bulletInst.GetComponent<Rigidbody> ().velocity = (bulletInst.transform.forward * bulletForce);
-//		debugText.text = "fired - added force";
-
+		Collider bulletCollider = bulletInst.GetComponent<Collider> ();
+		foreach (Collider collider in GetComponentsInChildren<Collider> ()) {
+			Physics.IgnoreCollision (bulletCollider, collider);
+		}
 		NetworkServer.Spawn (bulletInst);
 		bulletInst.GetComponent<Rigidbody> ().AddForce (bulletInst.transform.forward * bulletForce);
-//		debugText.text = "fired - spawned in server";
 	}
 }

@@ -136,6 +136,7 @@ namespace DaburuTools
 
 			IEnumerator DelayedSnapToPoint() {
 				yield return new WaitForFixedUpdate ();
+				yield return new WaitForFixedUpdate ();
 				SnapToPoint ();
 			}
 

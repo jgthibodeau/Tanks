@@ -8,10 +8,6 @@ public class EnableUI : NetworkBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (isLocalPlayer) {
-			UI.SetActive (true);
-		} else {
-			UI.SetActive (false);
-		}
+		UI.SetActive (isLocalPlayer);
 	}
 }
