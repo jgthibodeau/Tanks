@@ -14,10 +14,10 @@ public class TankController : MonoBehaviour
 //    [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
     [SerializeField] private WheelEffects[] m_WheelEffects = new WheelEffects[4];
 
-	[SerializeField] private WheelCollider[] m_WheelCollidersLeft = new WheelCollider[2];
+	[SerializeField] public WheelCollider[] m_WheelCollidersLeft = new WheelCollider[2];
 	[SerializeField] private GameObject[] m_WheelMeshesLeft = new GameObject[2];
 	[SerializeField] private WheelEffects[] m_WheelEffectsLeft = new WheelEffects[2];
-	[SerializeField] private WheelCollider[] m_WheelCollidersRight = new WheelCollider[2];
+	[SerializeField] public WheelCollider[] m_WheelCollidersRight = new WheelCollider[2];
 	[SerializeField] private GameObject[] m_WheelMeshesRight = new GameObject[2];
 	[SerializeField] private WheelEffects[] m_WheelEffectsRight = new WheelEffects[2];
 

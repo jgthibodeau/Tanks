@@ -43,15 +43,16 @@ public class Missile : NetworkBehaviour {
 			health.TakeDamage (damage);
 		}
 
-		Debug.Log ("calling explosion");
-		CmdExplode ();
+//		Debug.Log ("calling explosion " + collision + " " + collision.contacts.Length);
+//		CmdExplode (collision.contacts[0].point);
+		CmdExplode (transform.position);
 	}
 
 	[Command]
-	private void CmdExplode() {
+	private void CmdExplode(Vector3 collisionPoint) {
 		if (createExplosionParticles) {
 			Debug.Log ("creating explosion");
-			GameObject explosionInst = GameObject.Instantiate (explosion, transform.position, transform.rotation);
+			GameObject explosionInst = GameObject.Instantiate (explosion, collisionPoint, transform.rotation);
 			NetworkServer.Spawn (explosionInst);
 			Debug.Log ("spawned explosion");
 		}
@@ -61,7 +62,7 @@ public class Missile : NetworkBehaviour {
 
 		//find all colliders in radius
 		Debug.Log ("finding rigidbodies");
-		Collider[] colliders = Physics.OverlapSphere (transform.position, explosionRadius);
+		Collider[] colliders = Physics.OverlapSphere (collisionPoint, explosionRadius);
 		HashSet<Rigidbody> rigidbodies = new HashSet<Rigidbody>();
 		foreach (Collider collider in colliders) {
 			DestroyableTree tree = collider.gameObject.GetComponent<DestroyableTree> ();
@@ -73,7 +74,9 @@ public class Missile : NetworkBehaviour {
 				if (rigidBody != null && !rigidbodies.Contains (rigidBody)) {
 					rigidbodies.Add (rigidBody);
 					//add force based on distance and away from explosion point
-					Vector3 direction = rigidBody.position - transform.position;
+//					Vector3 center = rigidBody.position;
+					Vector3 center = rigidBody.transform.TransformPoint (rigidBody.centerOfMass);
+					Vector3 direction = center - collisionPoint;
 					float explosionPercent = 1 - (Vector3.Magnitude (direction) / explosionRadius);
 					if (explosionPercent >= 0) {
 						Vector3 explosionForce = direction.normalized * explosionPercent * explosionForceScale;
