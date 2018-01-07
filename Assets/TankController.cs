@@ -86,7 +86,8 @@ public class TankController : MonoBehaviour
     {
         float f = Mathf.Abs(CurrentSpeed/MaxSpeed);
         float upgearlimit = (1/(float) NoOfGears)*(m_GearNum + 1);
-        float downgearlimit = (1/(float) NoOfGears)*m_GearNum;
+//        float downgearlimit = (1/(float) NoOfGears)*m_GearNum;
+		float downgearlimit = -upgearlimit;
 
         if (m_GearNum > 0 && f < downgearlimit)
         {
@@ -165,15 +166,15 @@ public class TankController : MonoBehaviour
 		BrakeInput = footbrake = Mathf.Clamp(footbrake, 0, 1);
 
 		ApplyDrive(accelLeft, accelRight, footbrake);
-		CapSpeed();
+//		CapSpeed();
 
 
-		CalculateRevs();
-		GearChanging();
+//		CalculateRevs();
+//		GearChanging();
 
 		AddDownForce();
 //		CheckForWheelSpin();
-		TractionControl();
+//		TractionControl();
 	}
 
 
@@ -199,13 +200,15 @@ public class TankController : MonoBehaviour
 		
 	private void ApplyDrive(float accelLeft, float accelRight, float footbrake)
 	{
-		float thrustTorqueLeft = accelLeft * (m_CurrentTorque / m_WheelCollidersLeft.Length);
+//		float thrustTorqueLeft = accelLeft * (m_CurrentTorque / m_WheelCollidersLeft.Length);
+		float thrustTorqueLeft = accelLeft * (m_FullTorqueOverAllWheels / m_WheelCollidersLeft.Length);
 		foreach (WheelCollider wheel in m_WheelCollidersLeft) {
 			wheel.motorTorque = thrustTorqueLeft;
 			wheel.brakeTorque = m_BrakeTorque*footbrake;
 		}
 
-		float thrustTorqueRight = accelRight * (m_CurrentTorque / m_WheelCollidersRight.Length);
+//		float thrustTorqueRight = accelRight * (m_CurrentTorque / m_WheelCollidersRight.Length);
+		float thrustTorqueRight = accelRight * (m_FullTorqueOverAllWheels / m_WheelCollidersRight.Length);
 		foreach (WheelCollider wheel in m_WheelCollidersRight) {
 			wheel.motorTorque = thrustTorqueRight;
 			wheel.brakeTorque = m_BrakeTorque*footbrake;

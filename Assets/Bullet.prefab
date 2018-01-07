@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 82231066846918004}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Explosive
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,7 +170,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1402912882091856}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: daf386c04ad73cd499fb5945bdec5599, type: 3}
@@ -385,9 +385,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  accelerate: 0
   acceleration: 100
   accelerationTime: 10
   explosion: {fileID: 1243835993909528, guid: 711066bed5e0ec244a83d13c97150907, type: 2}
+  createExplosionParticles: 1
+  explosionRadius: 10
+  explosionForceScale: 20000
+  explosionForceMode: 1
 --- !u!114 &114944134720513900
 MonoBehaviour:
   m_ObjectHideFlags: 1

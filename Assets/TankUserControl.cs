@@ -24,6 +24,7 @@ public class TankUserControl : NetworkBehaviour{
 	public float maxFireCoolDown = 1f;
 	public float fireCoolDown;
 	public Image fireCoolDownImage;
+	public AudioSource GunSource;
 
 	public Text debugText;
 
@@ -74,6 +75,7 @@ public class TankUserControl : NetworkBehaviour{
 
 	[Command]
 	private void CmdFire() {
+		GunSource.Play ();
 		GameObject bulletInst = Instantiate (bullet, missileOrigin.position, missileOrigin.rotation);
 		Collider bulletCollider = bulletInst.GetComponent<Collider> ();
 		foreach (Collider collider in GetComponentsInChildren<Collider> ()) {
