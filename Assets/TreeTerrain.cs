@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class TreeTerrain : MonoBehaviour {
 	public Terrain terrain;
+	public GameObject deadTree;
+	public bool replaceTrees;
 	private TreeInstance[] _originalTrees;
 
 	void Start () {
@@ -27,6 +29,8 @@ public class TreeTerrain : MonoBehaviour {
 
 			DestroyableTree tree = capsule.AddComponent<DestroyableTree>();
 			tree.terrainIndex = i;
+			tree.deadTree = deadTree;
+			tree.replaceTree = replaceTrees;
 
 			capsule.transform.parent = terrain.transform;
 			capsule.transform.localPosition = Vector3.Scale(treeInstance.position, terrain.terrainData.size);

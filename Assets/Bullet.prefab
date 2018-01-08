@@ -388,10 +388,12 @@ MonoBehaviour:
   accelerate: 0
   acceleration: 100
   accelerationTime: 10
+  explosionPrefab: {fileID: 1243835993909528, guid: 711066bed5e0ec244a83d13c97150907,
+    type: 2}
   explosion: {fileID: 1243835993909528, guid: 711066bed5e0ec244a83d13c97150907, type: 2}
   createExplosionParticles: 1
-  explosionRadius: 10
-  explosionForceScale: 20000
+  explosionRadius: 2.5
+  explosionForceScale: 30000
   explosionForceMode: 1
 --- !u!114 &114944134720513900
 MonoBehaviour:

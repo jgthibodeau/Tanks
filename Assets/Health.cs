@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class Health : NetworkBehaviour {
+public class Health : NetworkBehaviour, IHittable {
 	[SyncVar(hook = "OnChangeHealth")]
-	public int currentHealth = maxHealth;
-	public const int maxHealth = 100;
+	public float currentHealth = maxHealth;
+	public const float maxHealth = 100;
 	public Text healthText;
 	public bool respawn = false;
 	public bool destroyOnDeath = true;
@@ -25,7 +25,11 @@ public class Health : NetworkBehaviour {
 		}
 	}
 
-	public void TakeDamage(int amount) {
+	public void Hit(float damage, GameObject hitter) {
+		TakeDamage (damage);
+	}
+
+	public void TakeDamage(float amount) {
 		if (!isServer) {
 			return;
 		}
@@ -45,7 +49,7 @@ public class Health : NetworkBehaviour {
 		}
 	}
 
-	void OnChangeHealth(int currentHealth) {
+	void OnChangeHealth(float currentHealth) {
 		if (healthText != null) {
 			healthText.text = "Health: " + currentHealth;
 		}
